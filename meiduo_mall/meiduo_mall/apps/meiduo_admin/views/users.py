@@ -11,7 +11,7 @@ from users.models import User
 class AuthorizationView(CreateAPIView):
     """验证管理员登录"""
     serializer_class = AuthorizationSerializer
-    queryset = User.objects.all()
+    # queryset = User.objects.all()
     # 管理员还没登录不能加权限
     # permission_classes = [IsAdminUser]
 
