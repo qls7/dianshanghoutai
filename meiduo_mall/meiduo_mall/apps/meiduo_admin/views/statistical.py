@@ -1,11 +1,23 @@
 from datetime import timedelta
 from django.utils import timezone
+from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from goods.models import GoodsVisitCount
+from meiduo_admin.serializers.statistical import StatisticalGoodsDayViewSerializer
 from orders.models import OrderInfo
 from users.models import User
+
+
+# GET /meiduo_admin/statistical/goods_day_views/
+class StatisticalGoodsDayView(ListAPIView):
+    """获取日分类商品访问量"""
+    permission_classes = [IsAdminUser]
+    date = timezone.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    queryset = GoodsVisitCount.objects.filter(create_time__gte=date)
+    serializer_class = StatisticalGoodsDayViewSerializer
 
 
 # GET /meiduo_admin/statistical/month_increment/

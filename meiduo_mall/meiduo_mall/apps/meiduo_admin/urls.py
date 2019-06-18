@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^statistical/day_active/$', StatisticalDayActiveView.as_view()),
     url(r'^statistical/day_orders/$', StatisticalDayOrdersView.as_view()),
     url(r'^statistical/month_increment/$', StatisticalMonthIncrementView.as_view()),
+    url(r'^statistical/goods_day_views/$', StatisticalGoodsDayView.as_view()),
 ]
