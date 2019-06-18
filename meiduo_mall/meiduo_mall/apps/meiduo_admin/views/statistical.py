@@ -1,3 +1,4 @@
+from datetime import timedelta
 from django.utils import timezone
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
@@ -5,6 +6,28 @@ from rest_framework.views import APIView
 
 from orders.models import OrderInfo
 from users.models import User
+
+
+# GET /meiduo_admin/statistical/month_increment/
+class StatisticalMonthIncrementView(APIView):
+    """获取30天内新增用户的数量"""
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        date = timezone.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        start_date = date - timedelta(days=29)
+        next_date = start_date + timedelta(days=1)
+        date_list = []
+        for i in range(30):
+            count = User.objects.filter(date_joined__gte=start_date, date_joined__lt=next_date).count()
+            date_list.append({
+                    'count': count,
+                    'date': start_date.date(),
+                })
+            start_date += timedelta(days=1)
+            next_date += timedelta(days=1)
+
+        return Response(date_list)
 
 
 # GET /meiduo_admin/statistical/day_orders/
