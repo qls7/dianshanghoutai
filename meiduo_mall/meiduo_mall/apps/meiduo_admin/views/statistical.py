@@ -3,10 +3,21 @@ from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from orders.models import OrderInfo
 from users.models import User
 
 
+# GET /meiduo_admin/statistical/day_orders/
+class StatisticalDayOrdersView(APIView):
+    """获取日下单用户量"""
+    permission_classes = [IsAdminUser]
 
+    def get(self, request):
+        date = timezone.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        # count = OrderInfo.objects.filter(create_time__gt=date).count()
+        # 用用户表去关联查询订单表,把查出来的信息进行去重处理,获取到当前下单的用户量
+        count = User.objects.filter(orders__create_time__gt=date).distinct().count()
+        return Response({'count': count, 'date': date.date()})
 
 
 # GET /meiduo_admin/statistical/day_active/
