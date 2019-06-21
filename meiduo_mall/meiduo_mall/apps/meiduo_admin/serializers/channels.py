@@ -1,6 +1,13 @@
 from rest_framework import serializers
 
-from goods.models import GoodsChannel, GoodsChannelGroup
+from goods.models import GoodsChannel, GoodsChannelGroup, GoodsCategory
+
+
+class GoodsCategoriesSerializer(serializers.ModelSerializer):
+    """获取一级分类数据"""
+    class Meta:
+        model = GoodsCategory
+        fields = ('id', 'name')
 
 
 # GET /meiduo_admin/goods/channel_types/

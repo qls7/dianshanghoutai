@@ -8,7 +8,7 @@ from django.conf.urls import include, url
 from rest_framework.routers import DefaultRouter
 
 from meiduo_admin.views import users
-from meiduo_admin.views.channels import GoodsChannelViewSet, GoodsChannelTypesView
+from meiduo_admin.views.channels import GoodsChannelViewSet, GoodsChannelTypesView, GoodsChannelCategoriesView
 from meiduo_admin.views.statistical import *
 from meiduo_admin.views.users import AuthorizationView
 
@@ -26,6 +26,8 @@ urlpatterns = [
     url(r'^users/$', users.UsersView.as_view()),
     # 获取频道组
     url(r'^goods/channel_types/$', GoodsChannelTypesView.as_view()),
+    # 获取一级分类数据
+    url(r'^goods/categories/$', GoodsChannelCategoriesView.as_view()),
 
 ]
 
