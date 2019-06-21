@@ -1,3 +1,4 @@
+import re
 from rest_framework import serializers
 
 from users.models import User
@@ -5,11 +6,57 @@ from users.models import User
 
 class UserSerializer(serializers.ModelSerializer):
     """用户表序列化器类"""
+
     # keyword = serializers.CharField(label='关键字')
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'mobile', 'email')
+        fields = ('id', 'username', 'mobile', 'email', 'password')
+        extra_kwargs = {
+            'username': {
+                'min_length': 5,
+                'max_length': 20,
+                'error_messages': {
+                    'min_length': '用户名最小长度为8位',
+                    'max_length': '用户名最大长度为20位',
+                }
+            },
+            'password': {
+                'write_only': True,
+                'min_length': 5,
+                'max_length': 20,
+                'error_messages': {
+                    'min_length': '密码最小长度为8位',
+                    'max_length': '密码最大长度为20位',
+                }
+            }
+        }
+
+    def validate_mobile(self, value):
+        """
+        自定义手机号检测
+        :param value:
+        :return:
+        """
+        if not re.match(r'^1[3-9]\d{9}$', value):
+            raise serializers.ValidationError('手机号格式不正确')
+
+        count = User.objects.filter(mobile=value).count()
+        if count > 0:
+            raise serializers.ValidationError('手机号已经注册,请务重复注册')
+
+        return value
+
+    def create(self, validated_data):
+        """
+        重写保存用户的create方法
+        :param validated_data:
+        :return:
+        """
+        # 用密文进行存储
+        user = User.objects.create_user(**validated_data)
+
+        return user
 
 
 class AuthorizationSerializer(serializers.ModelSerializer):

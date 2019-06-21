@@ -8,9 +8,11 @@ from meiduo_admin.serializers.users import AuthorizationSerializer, UserSerializ
 from users.models import User
 
 
+# POST /meiduo_admin/users/
 # GET /meiduo_admin/users/?keyword=<搜索内容>&page=<页码>&pagesize=<页容量>
-class UsersView(ListAPIView):
+class UsersView(ListAPIView, CreateAPIView):
     """获取用户列表接口"""
+    permission_classes = [IsAdminUser]
     serializer_class = UserSerializer
     # queryset = User.objects.all()
 
@@ -20,7 +22,7 @@ class UsersView(ListAPIView):
         if keyword:
             queryset = User.objects.filter(username__contains=keyword, is_staff=False)
         else:
-            queryset = User.objects.all()
+            queryset = User.objects.filter(is_staff=False)
 
         return queryset
 
