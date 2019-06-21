@@ -3,6 +3,15 @@ from rest_framework import serializers
 from users.models import User
 
 
+class UserSerializer(serializers.ModelSerializer):
+    """用户表序列化器类"""
+    # keyword = serializers.CharField(label='关键字')
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'mobile', 'email')
+
+
 class AuthorizationSerializer(serializers.ModelSerializer):
     """验证序列化器类"""
     token = serializers.CharField(label='JWK token', read_only=True)

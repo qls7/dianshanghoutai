@@ -1,11 +1,28 @@
 from rest_framework import status
-from rest_framework.generics import CreateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from meiduo_admin.serializers.users import AuthorizationSerializer
+from meiduo_admin.serializers.users import AuthorizationSerializer, UserSerializer
 from users.models import User
+
+
+# GET /meiduo_admin/users/?keyword=<搜索内容>&page=<页码>&pagesize=<页容量>
+class UsersView(ListAPIView):
+    """获取用户列表接口"""
+    serializer_class = UserSerializer
+    # queryset = User.objects.all()
+
+    def get_queryset(self):
+        """重写下查询集,判断是否有关键字"""
+        keyword = self.request.query_params.get('keyword')
+        if keyword:
+            queryset = User.objects.filter(username__contains=keyword, is_staff=False)
+        else:
+            queryset = User.objects.all()
+
+        return queryset
 
 
 class AuthorizationView(CreateAPIView):
