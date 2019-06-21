@@ -14,6 +14,7 @@ class UsersView(ListAPIView, CreateAPIView):
     """获取用户列表接口"""
     permission_classes = [IsAdminUser]
     serializer_class = UserSerializer
+
     # queryset = User.objects.all()
 
     def get_queryset(self):

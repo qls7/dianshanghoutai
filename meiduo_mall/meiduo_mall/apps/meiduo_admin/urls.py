@@ -1,6 +1,14 @@
+import os
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "meiduo_mall.settings.dev")
+import django
+django.setup()
+
 from django.conf.urls import include, url
+from rest_framework.routers import DefaultRouter
 
 from meiduo_admin.views import users
+from meiduo_admin.views.channels import GoodsChannelViewSet
 from meiduo_admin.views.statistical import *
 from meiduo_admin.views.users import AuthorizationView
 
@@ -17,3 +25,11 @@ urlpatterns = [
     # 用户管理
     url(r'^users/$', users.UsersView.as_view())
 ]
+
+# 频道管理
+router = DefaultRouter()
+router.register('goods/channels', GoodsChannelViewSet)
+urlpatterns += router.urls
+
+if __name__ == '__main__':
+    print(router.urls)
