@@ -5,6 +5,7 @@ from goods.models import GoodsChannel, GoodsChannelGroup, GoodsCategory
 
 class GoodsCategoriesSerializer(serializers.ModelSerializer):
     """获取一级分类数据"""
+
     class Meta:
         model = GoodsCategory
         fields = ('id', 'name')
@@ -13,6 +14,7 @@ class GoodsCategoriesSerializer(serializers.ModelSerializer):
 # GET /meiduo_admin/goods/channel_types/
 class GoodsChannelTypesSerializer(serializers.ModelSerializer):
     """商品频道组序列化器类"""
+
     class Meta:
         model = GoodsChannelGroup
         fields = ('id', 'name')
@@ -44,5 +46,3 @@ class GoodsChannelSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('频道id错误')
 
         return attrs
-
-
