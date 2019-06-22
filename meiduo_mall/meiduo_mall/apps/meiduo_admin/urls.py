@@ -1,11 +1,13 @@
 import os
 
+from meiduo_admin.serializers.skus import SKUSSerializer
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "meiduo_mall.settings.dev")
 import django
 
 django.setup()
 
-from meiduo_admin.views.skus import SKUImagesViewSet, SKUSimpleView
+from meiduo_admin.views.skus import SKUImagesViewSet, SKUSimpleView, SKUSViewSet
 
 from django.conf.urls import include, url
 from rest_framework.routers import DefaultRouter
@@ -43,8 +45,10 @@ urlpatterns += router.urls
 router = DefaultRouter()
 router.register(r'skus/images', SKUImagesViewSet)
 urlpatterns += router.urls
-
+# sku管理
+router = DefaultRouter()
+router.register(r'skus', SKUSViewSet)
+urlpatterns += router.urls
 
 if __name__ == '__main__':
     print(router.urls)
-
