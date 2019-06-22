@@ -4,7 +4,7 @@ from goods.models import GoodsChannel, GoodsChannelGroup, GoodsCategory
 
 
 class GoodsCategoriesSerializer(serializers.ModelSerializer):
-    """获取一级分类数据"""
+    """获取一级和三级分类数据"""
 
     class Meta:
         model = GoodsCategory

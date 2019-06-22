@@ -11,7 +11,7 @@ from meiduo_admin.serializers.skus import SKUImageSerializer, SKUSimpleSerialize
 class SKUSViewSet(ModelViewSet):
     """skus视图集,sku的增删改查"""
     permission_classes = [IsAdminUser]
-    queryset = SKU.objects.all()
+    # queryset = SKU.objects.all()
     serializer_class = SKUSSerializer
 
     def get_queryset(self):

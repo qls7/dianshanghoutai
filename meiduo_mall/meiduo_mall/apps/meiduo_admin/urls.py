@@ -1,6 +1,7 @@
 import os
 
 from meiduo_admin.serializers.skus import SKUSSerializer
+from meiduo_admin.views.spus import SPUSSimpleView, GoodsCategorySimpleView, SPUSpecificationView
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "meiduo_mall.settings.dev")
 import django
@@ -34,7 +35,13 @@ urlpatterns = [
     # 获取一级分类数据
     url(r'^goods/categories/$', GoodsChannelCategoriesView.as_view()),
     # 获取简单skus
-    url(r'^skus/simple/$', SKUSimpleView.as_view())
+    url(r'^skus/simple/$', SKUSimpleView.as_view()),
+    # 获取简单的spus分类
+    url(r'^goods/simple/$', SPUSSimpleView.as_view()),
+    # 获取简单的三级分类
+    url(r'^skus/categories/$', GoodsCategorySimpleView.as_view()),
+    # 获取spu商品规格信息
+    url(r'^goods/(?P<pk>\d+)/specs/$', SPUSpecificationView.as_view()),
 ]
 
 # 频道管理
