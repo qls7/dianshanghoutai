@@ -33,8 +33,9 @@ class SKUImageSerializer(serializers.ModelSerializer):
         """增加默认图片地址"""
         sku_id = validated_data.get('sku_id')
         sku = SKU.objects.get(id=sku_id)
+        # create成功返回的是sku_image对象, 如果没有默认图片, 把属性image给默认
         sku_image = super().create(validated_data)
-        if sku.default_image:
-            return sku_image
-        else:
-            sku.default_image = sku_image
+        if not sku.default_image:
+            sku.default_image = sku_image.image
+            sku.save()
+        return sku_image

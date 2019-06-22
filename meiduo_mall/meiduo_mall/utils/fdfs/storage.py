@@ -1,5 +1,6 @@
 from django.core.files.storage import Storage
 from django.conf import settings
+from fdfs_client.client import Fdfs_client
 
 
 class FDFSStorage(Storage):
@@ -20,7 +21,16 @@ class FDFSStorage(Storage):
         name: 上传文件的名称
         content: 包含上传文件内容的File对象，content.read()获取上传文件内容
         """
-        pass
+        # 创建fdfs-cli对象
+        client = Fdfs_client(self.client_conf)
+        # 上传文件到fdfs系统
+        res = client.upload_by_buffer(content.read())
+        # 判断是否上传成功
+        if res.get('Status') != 'Upload successed.':
+            raise Exception('文件上传FDFS失败')
+        # 返回文件id
+        file_id = res.get('Remote file_id')
+        return file_id
 
     def exists(self, name):
         """
