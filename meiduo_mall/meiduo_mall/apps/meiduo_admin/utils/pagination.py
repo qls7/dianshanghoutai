@@ -9,7 +9,7 @@ class StandardResultPagination(PageNumberPagination):
     # 指定分页默认页容量
     page_size = 5
     # 指定页容量的参数名
-    page_size_query_param = 'page_size'
+    page_size_query_param = 'pagesize'
     # 指定最大页容量
     max_page_size = 20
 

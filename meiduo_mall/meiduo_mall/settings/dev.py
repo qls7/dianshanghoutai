@@ -294,7 +294,7 @@ EMAIL_VERIFY_URL = 'http://www.meiduo.site:8000/emails/verification/'
 FDFS_URL = 'http://image.meiduo.site:8888/'
 FDFS_CLIENT_CONF = os.path.join(BASE_DIR, 'utils/fdfs/client.conf')
 
-# 指定文件存储类型
+############## 指定文件存储类型 ###################################
 DEFAULT_FILE_STORAGE = 'meiduo_mall.utils.fdfs.storage.FDFSStorage'
 
 # Haystack
@@ -351,3 +351,4 @@ JWT_AUTH = {
 #
 # payload = jwt_payload_handler(user)
 # token = jwt_encode_handler(payload)
+
