@@ -1,12 +1,10 @@
 import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "meiduo_mall.settings.dev")
+import django
+django.setup()
 
 from meiduo_admin.serializers.skus import SKUSSerializer
 from meiduo_admin.views.spus import SPUSSimpleView, GoodsCategorySimpleView, SPUSpecificationView
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "meiduo_mall.settings.dev")
-import django
-
-django.setup()
 
 from meiduo_admin.views.skus import SKUImagesViewSet, SKUSimpleView, SKUSViewSet
 
@@ -42,11 +40,15 @@ urlpatterns = [
     url(r'^skus/categories/$', GoodsCategorySimpleView.as_view()),
     # 获取spu商品规格信息
     url(r'^goods/(?P<pk>\d+)/specs/$', SPUSpecificationView.as_view()),
+    # 修改skus的接口路由
+    url(r'^skus/(?P<pk>\d+)/specs/$', SKUSViewSet.as_view(
+        {'put': 'update'}
+    )),
 ]
 
 # 频道管理
 router = DefaultRouter()
-router.register('goods/channels', GoodsChannelViewSet)
+router.register(r'goods/channels', GoodsChannelViewSet)
 urlpatterns += router.urls
 # 图片管理
 router = DefaultRouter()
