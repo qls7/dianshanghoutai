@@ -10,7 +10,7 @@ from meiduo_admin.serializers.spus import SPUSSimpleSerializer, SPUSpecification
 class SPUSpecificationView(ListAPIView):
     """获取SPU商品规格信息"""
     permission_classes = [IsAdminUser]
-    # queryset = SPUSpecification.objects.all()
+    queryset = SPUSpecification.objects.all()
     serializer_class = SPUSpecificationSerializer
 
     pagination_class = None

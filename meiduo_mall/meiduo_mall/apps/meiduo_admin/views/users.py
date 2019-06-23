@@ -15,7 +15,7 @@ class UsersView(ListAPIView, CreateAPIView):
     permission_classes = [IsAdminUser]
     serializer_class = UserSerializer
 
-    # queryset = User.objects.all()
+    queryset = User.objects.all()
 
     def get_queryset(self):
         """重写下查询集,判断是否有关键字"""

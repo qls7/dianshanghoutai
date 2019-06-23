@@ -2,6 +2,7 @@ import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "meiduo_mall.settings.dev")
 import django
 django.setup()
+from meiduo_admin.views.orders import OrdersViewSet
 
 from meiduo_admin.serializers.skus import SKUSSerializer
 from meiduo_admin.views.spus import SPUSSimpleView, GoodsCategorySimpleView, SPUSpecificationView
@@ -57,6 +58,10 @@ urlpatterns += router.urls
 # sku管理
 router = DefaultRouter()
 router.register(r'skus', SKUSViewSet)
+urlpatterns += router.urls
+# 订单管理
+router = DefaultRouter()
+router.register(r'orders', OrdersViewSet)
 urlpatterns += router.urls
 
 if __name__ == '__main__':
