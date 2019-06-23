@@ -1,6 +1,10 @@
 import os
+
+from meiduo_admin.views.permission import PermsViewSet, PermsTypesView
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "meiduo_mall.settings.dev")
 import django
+
 django.setup()
 from meiduo_admin.views.orders import OrdersViewSet
 
@@ -45,6 +49,8 @@ urlpatterns = [
     url(r'^skus/(?P<pk>\d+)/specs/$', SKUSViewSet.as_view(
         {'put': 'update'}
     )),
+    # 获取权限类型列表数据
+    url(r'^permission/content_types/$', PermsTypesView.as_view())
 ]
 
 # 频道管理
@@ -62,6 +68,10 @@ urlpatterns += router.urls
 # 订单管理
 router = DefaultRouter()
 router.register(r'orders', OrdersViewSet)
+urlpatterns += router.urls
+# 权限管理
+router = DefaultRouter()
+router.register(r'permission/perms', PermsViewSet)
 urlpatterns += router.urls
 
 if __name__ == '__main__':
