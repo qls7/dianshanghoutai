@@ -31,11 +31,17 @@ class SKUSSerializer(serializers.ModelSerializer):
         spu_id = attrs.get('spu_id')
         specs = attrs.get('specs')
         category_id = attrs.get('category_id')
-
-        if not SPU.objects.filter(id=spu_id):
+        try:
+            spu = SPU.objects.get(id=spu_id)
+        except:
             raise serializers.ValidationError('商品spu_id有误')
         if not GoodsCategory.objects.filter(id=category_id, parent__isnull=False):
             raise serializers.ValidationError('商品category_id有误')
+        # 校验规格的数量是否完整
+        count = spu.specs.all().count()
+        if len(specs) < count:
+            raise serializers.ValidationError('商品specs不完整')
+
         for spec in specs:
             spec_id = spec.get('spec_id')
             option_id = spec.get('option_id')
