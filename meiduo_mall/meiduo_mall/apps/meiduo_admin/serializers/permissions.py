@@ -1,6 +1,21 @@
 from django.contrib.auth.models import Permission, Group
 from django.contrib.contenttypes.models import ContentType
 from rest_framework import serializers
+from users.models import User
+
+
+class PermsGroupsSimpleSerializer(serializers.ModelSerializer):
+    """获取简单用户组列表"""
+    class Meta:
+        model = Group
+        fields = ('id', 'name')
+
+
+class PermsAdminsSerializer(serializers.ModelSerializer):
+    """管理员用户列表序列化器类"""
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'mobile', 'groups', 'user_permissions')
 
 
 class PermsSimpleSerializer(serializers.ModelSerializer):

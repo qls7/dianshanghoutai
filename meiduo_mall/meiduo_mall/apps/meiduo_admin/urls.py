@@ -1,6 +1,6 @@
 import os
 
-from meiduo_admin.views.permissions import PermsViewSet, PermsTypesView, PermsGroupViewSet
+from meiduo_admin.views.permissions import PermsViewSet, PermsTypesView, PermsGroupViewSet, PermsAdminsViewSet
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "meiduo_mall.settings.dev")
 import django
@@ -54,7 +54,11 @@ urlpatterns = [
     # 获取简易权限数据
     url(r'^permission/simple/$', PermsGroupViewSet.as_view(
         {'get': 'simple'}
-    ))
+    )),
+    # 获取简易用户组数据
+    url(r'^permission/groups/simple/$', PermsAdminsViewSet.as_view(
+        {'get': 'simple'}
+    )),
 ]
 
 # 频道管理
@@ -80,6 +84,10 @@ urlpatterns += router.urls
 # 权限组管理
 router = DefaultRouter()
 router.register(r'permission/groups', PermsGroupViewSet)
+urlpatterns += router.urls
+# 管理员用户管理
+router = DefaultRouter()
+router.register(r'permission/admins', PermsAdminsViewSet)
 urlpatterns += router.urls
 
 if __name__ == '__main__':

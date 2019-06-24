@@ -1,4 +1,5 @@
 from django.contrib.auth.models import Permission, Group
+from users.models import User
 from django.contrib.contenttypes.models import ContentType
 from rest_framework.decorators import action
 from rest_framework.generics import ListAPIView
@@ -7,7 +8,22 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from meiduo_admin.serializers.permissions import PermsSerializer, PermsTypesSerializer, PermsGroupSerializer, \
-    PermsSimpleSerializer
+    PermsSimpleSerializer, PermsAdminsSerializer, PermsGroupsSimpleSerializer
+
+
+# GET /meiduo_admin/permission/admins/
+class PermsAdminsViewSet(ModelViewSet):
+    """管理员的增删改查"""
+    permission_classes = [IsAdminUser]
+    queryset = User.objects.filter(is_staff=True)
+    serializer_class = PermsAdminsSerializer
+
+    # GET / meiduo_admin / permission / groups / simple /
+    def simple(self, request):
+        """获取简单用户组"""
+        instance = Group.objects.all()
+        serializer = PermsGroupsSimpleSerializer(instance, many=True)
+        return Response(serializer.data)
 
 
 # GET /meiduo_admin/permission/groups/
