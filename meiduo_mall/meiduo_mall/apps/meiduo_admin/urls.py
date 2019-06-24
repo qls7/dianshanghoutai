@@ -1,11 +1,9 @@
 import os
 
-from meiduo_admin.views.permissions import PermsViewSet, PermsTypesView, PermsGroupViewSet, PermsAdminsViewSet
-
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "meiduo_mall.settings.dev")
 import django
-
 django.setup()
+from meiduo_admin.views.permissions import PermsViewSet, PermsTypesView, PermsGroupViewSet, PermsAdminsViewSet
 from meiduo_admin.views.orders import OrdersViewSet
 
 from meiduo_admin.serializers.skus import SKUSSerializer

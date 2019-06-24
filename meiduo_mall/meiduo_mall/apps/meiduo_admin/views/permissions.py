@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from meiduo_admin.serializers.permissions import PermsSerializer, PermsTypesSerializer, PermsGroupSerializer, \
-    PermsSimpleSerializer, PermsAdminsSerializer, PermsGroupsSimpleSerializer
+    PermsSimpleSerializer, PermsAdminsSerializer
 
 
 # GET /meiduo_admin/permission/admins/
@@ -22,7 +22,7 @@ class PermsAdminsViewSet(ModelViewSet):
     def simple(self, request):
         """获取简单用户组"""
         instance = Group.objects.all()
-        serializer = PermsGroupsSimpleSerializer(instance, many=True)
+        serializer = PermsGroupSerializer(instance, many=True)
         return Response(serializer.data)
 
 
