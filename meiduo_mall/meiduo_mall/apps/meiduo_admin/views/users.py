@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import permission_required
+from django.utils.decorators import method_decorator
 from rest_framework import status
 from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.permissions import IsAdminUser
@@ -10,12 +12,17 @@ from users.models import User
 
 # POST /meiduo_admin/users/
 # GET /meiduo_admin/users/?keyword=<搜索内容>&page=<页码>&pagesize=<页容量>
+# @method_decorator(permission_required('users.view_user_api'))
 class UsersView(ListAPIView, CreateAPIView):
     """获取用户列表接口"""
     permission_classes = [IsAdminUser]
     serializer_class = UserSerializer
 
-    queryset = User.objects.all()
+    # queryset = User.objects.all()
+
+    @method_decorator(permission_required('users.view_user_api', raise_exception=True))
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
         """重写下查询集,判断是否有关键字"""

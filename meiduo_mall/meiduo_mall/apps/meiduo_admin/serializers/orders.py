@@ -6,10 +6,11 @@ from orders.models import OrderInfo, OrderGoods
 
 class OrdersUpdateSerializer(serializers.ModelSerializer):
     """修改订单商品的序列化器类"""
+
     class Meta:
         model = OrderInfo
         fields = ('order_id', 'status')
-        read_only_fields =('order_id', )
+        read_only_fields = ('order_id',)
 
     def validate_status(self, value):
         """校验status的值"""
@@ -21,6 +22,7 @@ class OrdersUpdateSerializer(serializers.ModelSerializer):
 
 class OrderSKUSerializer(serializers.ModelSerializer):
     """订单商品sku序列化器类"""
+
     class Meta:
         model = SKU
         fields = ('name', 'default_image')

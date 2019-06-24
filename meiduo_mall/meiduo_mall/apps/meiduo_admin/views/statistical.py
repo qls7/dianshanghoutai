@@ -33,9 +33,9 @@ class StatisticalMonthIncrementView(APIView):
         for i in range(30):
             count = User.objects.filter(date_joined__gte=start_date, date_joined__lt=next_date).count()
             date_list.append({
-                    'count': count,
-                    'date': start_date.date(),
-                })
+                'count': count,
+                'date': start_date.date(),
+            })
             start_date += timedelta(days=1)
             next_date += timedelta(days=1)
 
@@ -74,7 +74,7 @@ class StatisticalDayIncrementView(APIView):
     def get(self, request):
         date = timezone.now().replace(hour=0, microsecond=0, minute=0, second=0)
         count = User.objects.filter(date_joined__gt=date, is_staff=False).count()
-        return Response({'count':count, 'date': date.date()})
+        return Response({'count': count, 'date': date.date()})
 
 
 # GET /meiduo_admin/statistical/total_count/

@@ -1,7 +1,6 @@
 from django.contrib.auth.models import Permission, Group
 from users.models import User
 from django.contrib.contenttypes.models import ContentType
-from rest_framework.decorators import action
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response

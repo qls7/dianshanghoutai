@@ -37,7 +37,6 @@ class PermsAdminsSerializer(serializers.ModelSerializer):
             if count > 0:
                 raise serializers.ValidationError('手机号已经注册,请务重复注册')
         elif self.context.get('view').action == 'update':
-            # pk = self.context.get('view').data
             count = User.objects.filter(mobile=value).count()
             if count > 0:
                 if value != self.instance.mobile:
@@ -66,7 +65,7 @@ class PermsAdminsSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         """密码要加密存储"""
-        password = validated_data.pop('password')
+        password = validated_data.get('password')
         super().update(instance, validated_data)
         if password:
             instance.set_password(password)

@@ -5,6 +5,7 @@ from goods.models import SPU, SPUSpecification, SpecificationOption
 
 class SpecificationOptionSimpleSerializer(serializers.ModelSerializer):
     """简易规格选项序列化器类"""
+
     class Meta:
         model = SpecificationOption
         fields = ('id', 'value')
@@ -23,6 +24,7 @@ class SPUSpecificationSerializer(serializers.ModelSerializer):
 
 class SPUSSimpleSerializer(serializers.ModelSerializer):
     """简单SPUS序列化器类"""
+
     class Meta:
         model = SPU
         fields = ('id', 'name')
