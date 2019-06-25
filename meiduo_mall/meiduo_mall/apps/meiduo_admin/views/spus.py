@@ -1,9 +1,37 @@
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAdminUser
+from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 
-from goods.models import SPU, GoodsCategory, SPUSpecification
+from goods.models import SPU, GoodsCategory, SPUSpecification, Brand
+from meiduo_admin.serializers.brands import BrandsSimpleSerializer
 from meiduo_admin.serializers.channels import GoodsCategoriesSerializer
-from meiduo_admin.serializers.spus import SPUSSimpleSerializer, SPUSpecificationSerializer
+from meiduo_admin.serializers.spus import SPUSSimpleSerializer, SPUSpecificationSerializer, SPUSSerializer
+
+
+# GET /meiduo_admin/goods/?page=1&pagesize=10
+class SPUSViewSet(ModelViewSet):
+    """SPU视图集"""
+    permission_classes = [IsAdminUser]
+    queryset = SPU.objects.all()
+    serializer_class = SPUSSerializer
+
+    # GET / meiduo_admin / goods / brands / simple /
+    def brands_simple(self, request):
+        """返回简单的商品品牌"""
+        instance = Brand.objects.all()
+        serializer = BrandsSimpleSerializer(instance, many=True)
+        return Response(serializer.data)
+
+    # GET /meiduo_admin/goods/channel/categories/(?P<pk>\d+)/
+    def channel_categories(self, request, pk=None):
+        """返回商品分类,第一次返回父类, 再次请求返回二级和三级"""
+        if pk:
+            instance = GoodsCategory.objects.filter(parent_id=pk)
+        else:
+            instance = GoodsCategory.objects.filter(parent=None)
+        serializer = GoodsCategoriesSerializer(instance, many=True)
+        return Response(serializer.data)
 
 
 # GET /meiduo_admin/goods/(?P<pk>\d+)/specs/

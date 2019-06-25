@@ -6,12 +6,11 @@ django.setup()
 from meiduo_admin.views.permissions import PermsViewSet, PermsTypesView, PermsGroupViewSet, PermsAdminsViewSet
 from meiduo_admin.views.orders import OrdersViewSet
 
-from meiduo_admin.serializers.skus import SKUSSerializer
-from meiduo_admin.views.spus import SPUSSimpleView, GoodsCategorySimpleView, SPUSpecificationView
+from meiduo_admin.views.spus import SPUSSimpleView, GoodsCategorySimpleView, SPUSpecificationView, SPUSViewSet
 
 from meiduo_admin.views.skus import SKUImagesViewSet, SKUSimpleView, SKUSViewSet
 
-from django.conf.urls import include, url
+from django.conf.urls import url
 from rest_framework.routers import DefaultRouter
 
 from meiduo_admin.views import users
@@ -57,6 +56,18 @@ urlpatterns = [
     url(r'^permission/groups/simple/$', PermsAdminsViewSet.as_view(
         {'get': 'simple'}
     )),
+    # 获取简易品牌数据
+    url(r'^goods/brands/simple/$', SPUSViewSet.as_view(
+        {'get': 'brands_simple'}
+    )),
+    # 获取商品一级分类
+    url(r'goods/channel/categories/$', SPUSViewSet.as_view(
+        {'get': 'channel_categories'}
+    )),
+    # 获取商品二三分类
+    url(r'goods/channel/categories/(?P<pk>\d+)/$', SPUSViewSet.as_view(
+        {'get': 'channel_categories'}
+    )),
 ]
 
 # 频道管理
@@ -86,6 +97,10 @@ urlpatterns += router.urls
 # 管理员用户管理
 router = DefaultRouter()
 router.register(r'permission/admins', PermsAdminsViewSet)
+urlpatterns += router.urls
+# spu管理
+router = DefaultRouter()
+router.register(r'goods', SPUSViewSet)
 urlpatterns += router.urls
 
 if __name__ == '__main__':
