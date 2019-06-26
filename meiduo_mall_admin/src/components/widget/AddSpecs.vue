@@ -56,7 +56,7 @@ export default {
     submitForm(){
         this.axios.post(cons.apis + '/goods/specs/', {
               "name":this.specsForm.name,
-              "sku_id":this.specsForm.goods_id
+              "spu_id":this.specsForm.goods_id
             }, {
             headers: {
               'Authorization': 'JWT ' + token
