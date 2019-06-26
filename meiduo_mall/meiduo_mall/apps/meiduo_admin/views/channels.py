@@ -31,3 +31,5 @@ class GoodsChannelViewSet(ModelViewSet):
     permission_classes = [IsAdminUser]
     queryset = GoodsChannel.objects.all()
     serializer_class = GoodsChannelSerializer
+
+    lookup_value_regex = '\d+'

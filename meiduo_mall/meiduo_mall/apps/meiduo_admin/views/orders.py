@@ -16,6 +16,8 @@ class OrdersViewSet(ReadOnlyModelViewSet):
     queryset = OrderInfo.objects.all()
     serializer_class = OrdersViewSerializer
 
+    lookup_value_regex = '\d+'
+
     # PUT /meiduo_admin/orders/(?P<pk>\d+)/status/
     # 自定义请求方式其实就是UpdateAPIView
     # 自定义的请求方式如果要添加路由需要加上装饰器

@@ -1,8 +1,10 @@
 import os
-
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "meiduo_mall.settings.dev")
 import django
 django.setup()
+from meiduo_admin.views.specs import GoodsSpecsViewSet
+
+
 from meiduo_admin.views.permissions import PermsViewSet, PermsTypesView, PermsGroupViewSet, PermsAdminsViewSet
 from meiduo_admin.views.orders import OrdersViewSet
 
@@ -98,10 +100,17 @@ urlpatterns += router.urls
 router = DefaultRouter()
 router.register(r'permission/admins', PermsAdminsViewSet)
 urlpatterns += router.urls
+
 # spu管理
 router = DefaultRouter()
 router.register(r'goods', SPUSViewSet)
 urlpatterns += router.urls
+
+# specs管理
+router = DefaultRouter()
+router.register(r'goods/specs', GoodsSpecsViewSet)
+urlpatterns += router.urls
+
 
 if __name__ == '__main__':
     print(router.urls)

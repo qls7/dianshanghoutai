@@ -16,6 +16,8 @@ class SPUSViewSet(ModelViewSet):
     queryset = SPU.objects.all()
     serializer_class = SPUSSerializer
 
+    lookup_value_regex = '\d+'
+
     # GET / meiduo_admin / goods / brands / simple /
     def brands_simple(self, request):
         """返回简单的商品品牌"""

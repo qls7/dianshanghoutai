@@ -14,6 +14,8 @@ class SKUSViewSet(ModelViewSet):
     queryset = SKU.objects.all()
     serializer_class = SKUSSerializer
 
+    lookup_value_regex = '\d+'
+
     def get_queryset(self):
         """判断是否有keyword关键字查询"""
         keyword = self.request.query_params.get('keyword')
@@ -39,4 +41,4 @@ class SKUImagesViewSet(ModelViewSet):
     queryset = SKUImage.objects.all()
     serializer_class = SKUImageSerializer
     # 指定动态生成路由时, 提取参数的正则表达式, 可以不写
-    # lookup_value_regex = '\d+'
+    lookup_value_regex = '\d+'

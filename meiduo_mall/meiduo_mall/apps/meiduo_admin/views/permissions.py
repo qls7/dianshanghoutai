@@ -17,6 +17,8 @@ class PermsAdminsViewSet(ModelViewSet):
     queryset = User.objects.filter(is_staff=True)
     serializer_class = PermsAdminsSerializer
 
+    lookup_value_regex = '\d+'
+
     # GET / meiduo_admin / permission / groups / simple /
     def simple(self, request):
         """获取简单用户组"""
@@ -31,6 +33,8 @@ class PermsGroupViewSet(ModelViewSet):
     permission_classes = [IsAdminUser]
     queryset = Group.objects.all()
     serializer_class = PermsGroupSerializer
+
+    lookup_value_regex = '\d+'
 
     # GET / meiduo_admin / permission / simple /
     # @action(methods=['get'], detail=False) 路径不合适不能自动生成需要手动添加
@@ -47,6 +51,8 @@ class PermsViewSet(ModelViewSet):
     permission_classes = [IsAdminUser]
     queryset = Permission.objects.all()
     serializer_class = PermsSerializer
+
+    lookup_value_regex = '\d+'
 
 
 # GET / meiduo_admin / permission / content_types /
