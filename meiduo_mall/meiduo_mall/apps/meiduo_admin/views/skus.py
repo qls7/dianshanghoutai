@@ -29,6 +29,7 @@ class SKUSViewSet(ModelViewSet):
 class SKUSimpleView(ListAPIView):
     """简单获取sku列表"""
     pagination_class = None
+
     permission_classes = [IsAdminUser]
     queryset = SKU.objects.all()
     serializer_class = SKUSimpleSerializer

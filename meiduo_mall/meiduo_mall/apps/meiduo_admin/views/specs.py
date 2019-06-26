@@ -14,5 +14,3 @@ class GoodsSpecsViewSet(ModelViewSet):
 
     lookup_value_regex = '\d+'
 
-    def list(self, request, *args, **kwargs):
-        return super().list(request, *args, **kwargs)

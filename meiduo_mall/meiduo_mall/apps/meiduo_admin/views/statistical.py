@@ -19,6 +19,7 @@ class StatisticalGoodsDayView(ListAPIView):
     queryset = GoodsVisitCount.objects.filter(create_time__gte=date)
     serializer_class = StatisticalGoodsDayViewSerializer
 
+    pagination_class = None
 
 # GET /meiduo_admin/statistical/month_increment/
 class StatisticalMonthIncrementView(APIView):

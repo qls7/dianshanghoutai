@@ -1,5 +1,7 @@
 import os
 
+from meiduo_admin.views.options import SpecOptionsViewSet
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "meiduo_mall.settings.dev")
 import django
 
@@ -70,32 +72,42 @@ urlpatterns = [
     url(r'goods/channel/categories/(?P<pk>\d+)/$', SPUSViewSet.as_view(
         {'get': 'channel_categories'}
     )),
+    # 获取规格列表
+    url(r'goods/specs/simple/$', SpecOptionsViewSet.as_view({
+        'get': 'simple'
+    }))
 ]
 
 # 频道管理
 router = DefaultRouter()
 router.register(r'goods/channels', GoodsChannelViewSet)
 urlpatterns += router.urls
+
 # 图片管理
 router = DefaultRouter()
 router.register(r'skus/images', SKUImagesViewSet)
 urlpatterns += router.urls
+
 # sku管理
 router = DefaultRouter()
 router.register(r'skus', SKUSViewSet)
 urlpatterns += router.urls
+
 # 订单管理
 router = DefaultRouter()
 router.register(r'orders', OrdersViewSet)
 urlpatterns += router.urls
+
 # 权限管理
 router = DefaultRouter()
 router.register(r'permission/perms', PermsViewSet)
 urlpatterns += router.urls
+
 # 权限组管理
 router = DefaultRouter()
 router.register(r'permission/groups', PermsGroupViewSet)
 urlpatterns += router.urls
+
 # 管理员用户管理
 router = DefaultRouter()
 router.register(r'permission/admins', PermsAdminsViewSet)
@@ -109,6 +121,11 @@ urlpatterns += router.urls
 # specs管理
 router = DefaultRouter()
 router.register(r'goods/specs', GoodsSpecsViewSet)
+urlpatterns += router.urls
+
+# options管理
+router = DefaultRouter()
+router.register(r'specs/options', SpecOptionsViewSet)
 urlpatterns += router.urls
 
 if __name__ == '__main__':
