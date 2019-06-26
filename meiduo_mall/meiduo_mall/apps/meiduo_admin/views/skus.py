@@ -41,5 +41,5 @@ class SKUImagesViewSet(ModelViewSet):
     permission_classes = [IsAdminUser]
     queryset = SKUImage.objects.all()
     serializer_class = SKUImageSerializer
-    # 指定动态生成路由时, 提取参数的正则表达式, 可以不写
+    # 指定动态生成路由时, 提取参数的正则表达式
     lookup_value_regex = '\d+'

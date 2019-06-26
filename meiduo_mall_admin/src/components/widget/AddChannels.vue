@@ -1,6 +1,6 @@
 <template>
 	<div class="add_channels_wrap">
-    <el-button type="primary" size="small" @click="pop_show = true" class="pull-right">新增频道</el-button>    
+    <el-button type="primary" size="small" @click="pop_show = true" class="pull-right">新增频道</el-button>
     <el-dialog title="新增频道" :visible.sync="pop_show" append-to-body>
         <el-form :model="ChannelsForm" status-icon :rules="rulesChannelsForm" ref="ChannelsForm" label-width="100px">
           <el-form-item label="频道组：" prop="group_id">
@@ -35,7 +35,7 @@
           </el-form-item>
         </el-form>
     </el-dialog>
-	</div>  
+	</div>
 </template>
 
 <script>
@@ -43,7 +43,7 @@ import cons from '@/components/constant';
 let token = localStorage.token;
 export default {
   name: 'AddChannels',
-  data () { 
+  data () {
     return {
       pop_show:false,
       group_type_list:[],
@@ -69,17 +69,17 @@ export default {
             headers: {
               'Authorization': 'JWT ' + token
             },
-            responseType: 'json'           
+            responseType: 'json'
         })
         .then(dat=>{
             if(dat.status==201){
               this.$message({
                 type: 'success',
                 message: '频道添加成功!'
-              }); 
-              this.pop_show = false;           
+              });
+              this.pop_show = false;
               this.resetForm('ChannelsForm');
-              this.$emit('fnResetTable');                        
+              this.$emit('fnResetTable');
             }
         }).catch(err=>{
             if(err.response.status==400){
@@ -97,7 +97,7 @@ export default {
                   type:'info',
                   message:errmsg.non_field_errors[0]
                 });
-              }           
+              }
            }
         });
     },
@@ -109,8 +109,8 @@ export default {
         responseType: 'json',
       })
       .then(dat=>{
-          this.group_type_list = dat.data;        
-      }).catch(err=>{      
+          this.group_type_list = dat.data;
+      }).catch(err=>{
          console.log(err.response);
       });
     },
@@ -122,8 +122,8 @@ export default {
         responseType: 'json',
       })
       .then(dat=>{
-          this.category_list = dat.data;        
-      }).catch(err=>{      
+          this.category_list = dat.data;
+      }).catch(err=>{
          console.log(err.response);
       });
     },

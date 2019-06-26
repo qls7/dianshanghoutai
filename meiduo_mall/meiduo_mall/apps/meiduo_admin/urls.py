@@ -1,5 +1,6 @@
 import os
 
+from meiduo_admin.views.brands import GoodsBrandsViewSet
 from meiduo_admin.views.options import SpecOptionsViewSet
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "meiduo_mall.settings.dev")
@@ -75,7 +76,7 @@ urlpatterns = [
     # 获取规格列表
     url(r'goods/specs/simple/$', SpecOptionsViewSet.as_view({
         'get': 'simple'
-    }))
+    })),
 ]
 
 # 频道管理
@@ -126,6 +127,11 @@ urlpatterns += router.urls
 # options管理
 router = DefaultRouter()
 router.register(r'specs/options', SpecOptionsViewSet)
+urlpatterns += router.urls
+
+# brands管理
+router = DefaultRouter()
+router.register(r'goods/brands', GoodsBrandsViewSet)
 urlpatterns += router.urls
 
 if __name__ == '__main__':
